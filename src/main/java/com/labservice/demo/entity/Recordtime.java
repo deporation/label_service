@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
-import lombok.Builder;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -22,7 +22,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("Recordtime")
-@Builder
+
 public class Recordtime implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,5 +47,7 @@ public class Recordtime implements Serializable {
 
     @TableField("retime")
     private LocalDateTime retime;
+    public Recordtime(){
 
+    }
 }

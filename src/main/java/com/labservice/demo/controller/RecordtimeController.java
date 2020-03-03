@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -33,77 +32,128 @@ public class RecordtimeController {
 
     @Autowired
     private RecordtimeServiceImpl recordtimeServiceImpl;
-    private boolean sot = false;
+
+    public void set(HttpSession httpSession) {
+        String[] strs = httpSession.getValueNames();
+        for (String str : strs) {
+            if (str.equals("recordtimes")) {
+                httpSession.removeAttribute("recordtimes");
+            } else if (str.equals("mod")) {
+                httpSession.removeAttribute("mod");
+            }
+        }
+    }
 
     @RequestMapping("/stuself")
-    @ResponseBody
     public String self(HttpSession httpSession, Model model) {
         try {
             People stu = (People) httpSession.getAttribute("people");
             QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("pid", stu.getPid());
             List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
-            model.addAttribute("recordtimes", recordtimes);
-            sot = false;
-            model.addAttribute("mod", sot);
+            System.out.println(recordtimes);
+            set(httpSession);
+            httpSession.setAttribute("recordtimes", recordtimes);
+            httpSession.setAttribute("mod", 0);
         } catch (Exception e) {
             // TODO: handle exception
+            e.printStackTrace();
         }
         return "form-record";
     }
 
     @RequestMapping("/stulea")
     public String stu_lea(HttpSession httpSession, Model model) {
+
         try {
             People stu = (People) httpSession.getAttribute("people");
             QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("sid", stu.getPid());
             List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
-            model.addAttribute("recordtimes", recordtimes);
-            sot = true;
-            model.addAttribute("mod", sot);
+            System.out.println(recordtimes);
+            set(httpSession);
+            httpSession.setAttribute("recordtimes", recordtimes);
+            httpSession.setAttribute("mod", 1);
         } catch (Exception e) {
             // TODO: handle exception
+            e.printStackTrace();
         }
         return "form-record";
     }
 
     @RequestMapping("/tea")
     public String tea_pro(HttpSession httpSession, Model model) {
+
         try {
             People tea = (People) httpSession.getAttribute("people");
+            System.out.println(tea);
             QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
+            System.out.println(tea.getPid());
             queryWrapper.eq("tid", tea.getPid());
             List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
-            model.addAttribute("recordtimes", recordtimes);
-            sot = true;
-            model.addAttribute("mod", sot);
-
+            System.out.println(recordtimes);
+            set(httpSession);
+            httpSession.setAttribute("recordtimes", recordtimes);
+            httpSession.setAttribute("mod", 1);
         } catch (Exception e) {
             // TODO: handle exception
+            e.printStackTrace();
         }
-
         return "form-record";
     }
 
     @RequestMapping(value = "record.action", method = { RequestMethod.POST, RequestMethod.GET })
-    @ResponseBody
-    public String select(@RequestBody Recordtime recordtime, Model model, HttpSession httpSession) {
+    public String select(@RequestBody Map<String, String> recordtime, Model model, HttpSession httpSession) {
+        System.out.println(recordtime);
+        System.out.println(recordtime.get("proname")==null?1:0);
+        People people = (People) httpSession.getAttribute("people");
+        System.out.println(recordtime);
         QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
         List<Recordtime> recordtimes = new ArrayList<>();
-        Map map = model.asMap();
-        sot = (boolean) map.get("mod");
+        //Boolean sot = (boolean) recordtime.get("mod");
+        Boolean sot = true;
         try {
             if (sot) {
-                queryWrapper.eq("pname", recordtime.getPname()).eq("proname", recordtime.getProname());
+                if (people.getPlimit() == 1) {
+                    queryWrapper.eq("sid", people.getPid());
+                    if (recordtime.get("pname") != null && recordtime.get("proname") != null) {
+                        queryWrapper.eq("pname", recordtime.get("pname")).eq("proname", recordtime.get("proname"));
+                    } else if (recordtime.get("pname") != null && recordtime.get("proname") == null) {
+                        queryWrapper.eq("pname", recordtime.get("pname"));
+                    } else if (recordtime.get("proname") != null && recordtime.get("pname") == null) {
+                        queryWrapper.eq("proname", recordtime.get("proname"));
+                    }
+                } else {
+                    queryWrapper.eq("tid", people.getPid());
+                    if (recordtime.get("pname") != null && recordtime.get("proname") != null) {
+                        queryWrapper.eq("pname", recordtime.get("pname")).eq("proname", recordtime.get("proname"));
+                    } else if (recordtime.get("pname") != null && recordtime.get("proname") == null) {
+                        queryWrapper.eq("pname", recordtime.get("pname"));
+                    } else if (recordtime.get("proname") != null && recordtime.get("pname") == null) {
+                        queryWrapper.eq("proname", recordtime.get("proname"));
+                    }
+                }
+
                 recordtimes = recordtimeServiceImpl.list(queryWrapper);
             } else {
-                queryWrapper.eq("proname", recordtime.getProname());
+                if (recordtime.get("proname") != null) {
+                    queryWrapper.eq("proname", recordtime.get("proname"));
+                } else
+                    queryWrapper.eq("pid", people.getPid());
                 recordtimes = recordtimeServiceImpl.list(queryWrapper);
             }
-            model.addAttribute("recordtimes", recordtimes);
+            String[] strs = httpSession.getValueNames();
+            for (String str : strs) {
+                if (str.equals("recordtimes")) {
+                    httpSession.removeAttribute("recordtimes");
+                    break;
+                }
+            }
+            httpSession.setAttribute("recordtimes", recordtimes);
+            System.out.println(recordtimes);
         } catch (Exception e) {
             // TODO: handle exception
+            e.printStackTrace();
         }
         return "form-record";
     }

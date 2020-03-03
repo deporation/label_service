@@ -626,21 +626,25 @@ $("#joinPro_sub").click(function(){
         }
     )
 })
-$("#check").click(function(){
-    let formObject = {};
-    let formArray = $("#check_self").serializeArray();
-    $.each(formArray, function (i, item) {
-        formObject[item.name] = item.value;
-    });
+$("#check_self").click(function(){
+    let projectMap = new Map();
+    projectMap.set("pname",$('#pname').val());
+    projectMap.set("proname",$('#proname').val());
+    projectMap.set("mod",$('#proname').data("mod"));
+    let obj= Object.create(null);
+    for (let[k,v] of projectMap) {
+        obj[k] = v;
+    }
+    console.log(projectMap);
     $.ajax(
         {
             url: "/recordtime/record.action",
             type:"post",
             contentType: "application/json;charset=UTF-8",
-            data: JSON.stringify(formObject),
+            data: JSON.stringify(obj),
             dataType: "text",
             success: function (data) {
-
+                window.location.reload();
             }
         }
     )

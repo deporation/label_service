@@ -23,7 +23,6 @@ public class TeacherController {
     }
     @RequestMapping("/tea")
     public String rectea(){
-        String str = "/teacher/tea";
         return "redirect:/recordtime/tea";
     }
 }

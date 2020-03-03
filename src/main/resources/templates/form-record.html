@@ -373,13 +373,13 @@
                                 </div>
                             </div>
                         </div>
-                        <form id="check_self">
-                            <div class="am-u-sm-12 am-u-md-3">
+                        <form>
+                            <div class="am-u-sm-12 am-u-md-3" th:attr="data-mod=${session.mod}" id="mod" >
 
-                                <div class="am-form-group" th:if = "#{model} == false">
+                                <div class="am-form-group" th:if = "${session.mod} == 0" >
                                     <input type="text" class="am-form-field" id="proname" placeholder="项目名字">
                                 </div>
-                                <div class="am-form-group" th:if = "#{model} == true">
+                                <div class="am-form-group" th:if = "${session.mod} == 1">
                                     <input type="text" class="am-form-field" id="proname" placeholder="项目名字">
                                     <input type="text" class="am-form-field" id="pname" placeholder="参与人姓名">
                                 </div>
@@ -389,7 +389,7 @@
                                     <span class="am-input-group-btn">
                                         <button
                                             class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search"
-                                            type="button" id="check"></button>
+                                            type="button" id="check_self"></button>
                                     </span>
                                 </div>
                             </div>
@@ -411,13 +411,13 @@
                                         </tr>
                                     </thead>
                                     <tbody id="checklist">
-                                        <tr th:each="recordtime: ${recordtimes}">
+                                        <tr th:each="recordtime: ${session.recordtimes}">
                                             <td><input type="checkbox" class="tpl-table-fz-check"
-                                                    th:attr="data-pnum=${pplinfo.pplid}"></td>
-                                            <td class="pname" name="pname" th:text="${recordtime.pname}"><a href="#"></a>
+                                                    ></td>
+                                            <td th:text="${recordtime.pname}"><a href="#"></a>
                                             </td>
-                                            <td class="proname" name="proname" th:text="${recordtime.proname}"></td>
-                                            <td class="am-hide-sm-only lname" name="lname" th:text="${recordtime.retime}">
+                                            <td th:text="${recordtime.proname}"></td>
+                                            <td class="am-hide-sm-only " th:text="${recordtime.retime}">
                                             </td>
                                             <td class="am-hide-sm-only"></td>
                                             <td>
