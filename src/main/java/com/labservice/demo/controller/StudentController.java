@@ -28,4 +28,17 @@ public class StudentController {
     public String pplc() {
         return "redirect:/ppl/agree";
     }
+    @RequestMapping("/recordself")
+    public String recself(){
+        String str = "/student/recordself";
+        return "redirect:/recordtime/stuself";
+    }
+    @RequestMapping()
+    public String recteam(){
+        return "redirect:/recordtime/stulea";
+    }
+    @RequestMapping()
+    public String rectea(){
+        return "redirect:/recordtime/tea";
+    }
 }
