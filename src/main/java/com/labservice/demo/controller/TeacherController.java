@@ -21,5 +21,9 @@ public class TeacherController {
     public String project() {
         return "redirect:/projectinfo/checkProject";
     }
-
+    @RequestMapping("/tea")
+    public String rectea(){
+        String str = "/teacher/tea";
+        return "redirect:/recordtime/tea";
+    }
 }

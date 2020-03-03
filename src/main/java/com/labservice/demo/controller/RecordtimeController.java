@@ -34,57 +34,77 @@ public class RecordtimeController {
     @Autowired
     private RecordtimeServiceImpl recordtimeServiceImpl;
     private boolean sot = false;
+
     @RequestMapping("/stuself")
     @ResponseBody
-    public String self(HttpSession httpSession,Model model){
-        People stu = (People) httpSession.getAttribute("people");
-        QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("pid", stu.getPid());
-        List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
-        model.addAttribute("recordtimes", recordtimes);
-        sot = false;
-        model.addAttribute("mod", sot);
+    public String self(HttpSession httpSession, Model model) {
+        try {
+            People stu = (People) httpSession.getAttribute("people");
+            QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("pid", stu.getPid());
+            List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
+            model.addAttribute("recordtimes", recordtimes);
+            sot = false;
+            model.addAttribute("mod", sot);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         return "form-record";
     }
-    
+
     @RequestMapping("/stulea")
-    public String stu_lea(HttpSession httpSession,Model model) {
-        People stu = (People) httpSession.getAttribute("people");
-        QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("sid", stu.getPid());
-        List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
-        model.addAttribute("recordtimes", recordtimes);
-        sot = true;
-        model.addAttribute("mod", sot);
+    public String stu_lea(HttpSession httpSession, Model model) {
+        try {
+            People stu = (People) httpSession.getAttribute("people");
+            QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("sid", stu.getPid());
+            List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
+            model.addAttribute("recordtimes", recordtimes);
+            sot = true;
+            model.addAttribute("mod", sot);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
         return "form-record";
     }
 
     @RequestMapping("/tea")
-    public String tea_pro(HttpSession httpSession,Model model) {
-        People tea = (People) httpSession.getAttribute("people");
-        QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("tid", tea.getPid());
-        List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
-        model.addAttribute("recordtimes", recordtimes);
-        sot = true;
-        model.addAttribute("mod", sot);
+    public String tea_pro(HttpSession httpSession, Model model) {
+        try {
+            People tea = (People) httpSession.getAttribute("people");
+            QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("tid", tea.getPid());
+            List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
+            model.addAttribute("recordtimes", recordtimes);
+            sot = true;
+            model.addAttribute("mod", sot);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
         return "form-record";
     }
+
     @RequestMapping(value = "record.action", method = { RequestMethod.POST, RequestMethod.GET })
     @ResponseBody
-    public String select(@RequestBody Recordtime recordtime,Model model,HttpSession httpSession) {
+    public String select(@RequestBody Recordtime recordtime, Model model, HttpSession httpSession) {
         QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
         List<Recordtime> recordtimes = new ArrayList<>();
         Map map = model.asMap();
-        sot = (boolean)map.get("mod");
-        if (sot) {
-            queryWrapper.eq("pname", recordtime.getPname()).eq("proname", recordtime.getProname());
-            recordtimes = recordtimeServiceImpl.list(queryWrapper);
-        } else {
-            queryWrapper.eq("proname", recordtime.getProname());
-            recordtimes = recordtimeServiceImpl.list(queryWrapper);
+        sot = (boolean) map.get("mod");
+        try {
+            if (sot) {
+                queryWrapper.eq("pname", recordtime.getPname()).eq("proname", recordtime.getProname());
+                recordtimes = recordtimeServiceImpl.list(queryWrapper);
+            } else {
+                queryWrapper.eq("proname", recordtime.getProname());
+                recordtimes = recordtimeServiceImpl.list(queryWrapper);
+            }
+            model.addAttribute("recordtimes", recordtimes);
+        } catch (Exception e) {
+            // TODO: handle exception
         }
-        model.addAttribute("recordtimes", recordtimes);
         return "form-record";
     }
 }

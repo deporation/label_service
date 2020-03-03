@@ -33,12 +33,9 @@ public class StudentController {
         String str = "/student/recordself";
         return "redirect:/recordtime/stuself";
     }
-    @RequestMapping()
+    @RequestMapping("/recordlea")
     public String recteam(){
+        String str = "/student/recordlea";
         return "redirect:/recordtime/stulea";
-    }
-    @RequestMapping()
-    public String rectea(){
-        return "redirect:/recordtime/tea";
     }
 }
