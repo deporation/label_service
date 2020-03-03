@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/teacher")
-
 public class TeacherController {
+
     @RequestMapping("/signschool")
     public String ppl() {
         return "redirect:/school/signSchool";

@@ -107,7 +107,7 @@ public class PplController {
             pnums.add(project.getPnum());
         }
         QueryWrapper<Pplinfo> queryWrapper2 = new QueryWrapper<>();
-        queryWrapper2.in("pnum", pnums).ne("pname",stu.getPname());
+        queryWrapper2.in("pnum", pnums).ne("pname",stu.getPname()).eq("stat",false);
         List<Pplinfo> pplinfos = pplinfoServiceImpl.list(queryWrapper2);
         model.addAttribute("pplinfos", pplinfos);
         return "form-join";
@@ -117,7 +117,10 @@ public class PplController {
     public Map<String, String> agree(@RequestBody List<Integer> pplids, HttpSession session){
         boolean res = false;
         Map<String, String> map = new HashMap<>();
-
+        UpdateWrapper<Ppl> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.in("pplid",pplids);
+        Ppl ppl = Ppl.builder().stat(true).build();
+        res = pplServiceImpl.update(ppl, updateWrapper);
         map.put("res", res == true ? "1" : "0");
         return map;
     }

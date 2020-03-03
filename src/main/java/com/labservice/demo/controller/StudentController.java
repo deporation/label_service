@@ -20,14 +20,12 @@ public class StudentController {
     public String ppl() {
         return "redirect:/ppl/signppl";
     }
-
     @RequestMapping("/signproject")
     public String project() {
         return "redirect:/project/signProject";
     }
-
-    @RequestMapping("checkppl")
+    @RequestMapping("/agree")
     public String pplc() {
-        return "redirect:/ppl/check";
+        return "redirect:/ppl/agree";
     }
 }
