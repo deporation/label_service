@@ -2,6 +2,8 @@ package com.labservice.demo.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.labservice.demo.entity.People;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,7 +22,12 @@ public class UrlController {
     }
 
     @RequestMapping(value = "index")
-    public String index() {
-        return "index";
+    public String index(HttpSession session) {
+        People people = (People)session.getAttribute("people");
+        if (people.getPlimit() == 2) {
+            return "index-tea";
+        } else {
+            return "index-stu";
+        }
     }
 }
