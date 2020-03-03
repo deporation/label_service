@@ -18,7 +18,7 @@ public class StudentController {
 
     @RequestMapping("/signppl")
     public String ppl() {
-        return "redirect:/ppl/signppl";
+        return "redirect:/ppl/signPpl";
     }
     @RequestMapping("/signproject")
     public String project() {

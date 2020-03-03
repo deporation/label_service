@@ -19,7 +19,7 @@ public class TeacherController {
 
     @RequestMapping("/checkProject")
     public String project() {
-        return "redirect:/label/checkProject";
+        return "redirect:/projectinfo/checkProject";
     }
 
 }

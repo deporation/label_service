@@ -23,11 +23,6 @@ public class UrlController {
 
     @RequestMapping(value = "index")
     public String index(HttpSession session) {
-        People people = (People)session.getAttribute("people");
-        if (people.getPlimit() == 2) {
-            return "index-tea";
-        } else {
-            return "index-stu";
-        }
+        return "index";
     }
 }

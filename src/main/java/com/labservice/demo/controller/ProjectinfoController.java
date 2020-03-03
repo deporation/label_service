@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -43,24 +44,6 @@ public class ProjectinfoController {
     @Autowired
     private PplServiceImpl pplServiceImpl;
 
-    @RequestMapping("/ppllist")
-    public String listppl(HttpSession httpSession) {
-        try {
-            People people = (People) httpSession.getAttribute("people");
-
-            if (people.getPlimit() != 2 || people == null) {
-                return "redirect:/";
-            } else {
-                QueryWrapper<Projectinfo> wrapper = new QueryWrapper<>();
-                wrapper.eq("scid", people.getScid());
-                List<Projectinfo> proinfo = projectinfoServiceImpl.list(wrapper);
-                httpSession.setAttribute("ProjectInfo", proinfo);
-                return "list_ppl";
-            }
-        } catch (NullPointerException exception) {
-            return "redirect:/";
-        }
-    }
 
     @RequestMapping(value = "checkProject")
     public String Check(Model model, HttpSession httpSession) {
@@ -76,7 +59,7 @@ public class ProjectinfoController {
         return "form-checkPro";
     }
 
-    @RequestMapping(value = "updateProjectsta.action")
+    @RequestMapping(value = "updateProjectsta.action", method = { RequestMethod.POST, RequestMethod.GET })
     @ResponseBody
     public Map<String, String> updateProject(@RequestBody List<String> pnumList) {
         boolean res = false;

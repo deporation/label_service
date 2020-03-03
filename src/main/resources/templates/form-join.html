@@ -177,162 +177,162 @@
 
 
     <div class="tpl-page-container tpl-page-header-fixed">
+        <div>
+            <div th:if="${session.people.plimit} == 1">
+                <div class="tpl-left-nav tpl-left-nav-hover">
+                    <div class="tpl-left-nav-title">
+                        Amaze UI 列表
+                    </div>
+                    <div class="tpl-left-nav-list">
+                        <ul class="tpl-left-nav-menu">
+                            <li class="tpl-left-nav-item">
+                                <a href="/index" class="nav-link active">
+                                    <i class="am-icon-home"></i>
+                                    <span>首页</span>
+                                </a>
+                            </li>
 
-        <div th:if ="${session.people.plimit} == 1">
-            <div class="tpl-left-nav tpl-left-nav-hover">
-                <div class="tpl-left-nav-title">
-                    Amaze UI 列表
-                </div>
-                <div class="tpl-left-nav-list">
-                    <ul class="tpl-left-nav-menu">
-                        <li class="tpl-left-nav-item">
-                            <a href="/index" class="nav-link active">
-                                <i class="am-icon-home"></i>
-                                <span>首页</span>
-                            </a>
-                        </li>
-    
-                        <li class="tpl-left-nav-item">
-                            
-                        </li>
-                        <li class="tpl-left-nav-item">
-                            <a href="javascript:;" class="nav-link tpl-left-nav-link-list">
-                                <i class="am-icon-table"></i>
-                                <span>注册申请</span>
-                                <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
-                            </a>
-                            <ul class="tpl-left-nav-sub-menu">
-                                <li>
-                                    <a href="/student/signproject">
-                                        <i class="am-icon-angle-right"></i>
-                                        <span>注册项目</span>
-                                        <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
-                                    </a>
-    
-                                    <a href="/student/signppl">
-                                        <i class="am-icon-angle-right"></i>
-                                        <span>申请参加项目</span>
-                                        <i class="tpl-left-nav-content tpl-badge-success">
-                                            18
-                                        </i>
-    
-                                        <a href="/student/agree">
+                            <li class="tpl-left-nav-item">
+
+                            </li>
+                            <li class="tpl-left-nav-item">
+                                <a href="javascript:;" class="nav-link tpl-left-nav-link-list">
+                                    <i class="am-icon-table"></i>
+                                    <span>注册申请</span>
+                                    <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
+                                </a>
+                                <ul class="tpl-left-nav-sub-menu">
+                                    <li>
+                                        <a href="/student/signproject">
                                             <i class="am-icon-angle-right"></i>
-                                            <span>审核项目参与者</span>
-                                            <i class="tpl-left-nav-content tpl-badge-primary">
-                                                5
+                                            <span>注册项目</span>
+                                            <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
+                                        </a>
+
+                                        <a href="/student/signppl">
+                                            <i class="am-icon-angle-right"></i>
+                                            <span>申请参加项目</span>
+                                            <i class="tpl-left-nav-content tpl-badge-success">
+                                                18
                                             </i>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="tpl-left-nav-item">
-                            <a href="javascript:;" class="nav-link tpl-left-nav-link-list">
-                                <i class="am-icon-wpforms"></i>
-                                <span>打卡记录</span>
-                                <i
-                                    class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right tpl-left-nav-more-ico-rotate"></i>
-                            </a>
-                            <ul class="tpl-left-nav-sub-menu" style="display: block;">
-                                <li>
-                                    <a href="#">
-                                        <i class="am-icon-angle-right"></i>
-                                        <span>自我打卡记录</span>
-                                        <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
-                                    </a>
-    
-                                    <a href="#">
-                                        <i class="am-icon-angle-right"></i>
-                                        <span>管理项目打卡记录</span>
-                                    </a>
-                                    <a href="chart.html" class="nav-link tpl-left-nav-link-list">
-                                        <i class="am-icon-bar-chart"></i>
-                                        <span>数据表</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+
+                                            <a href="/student/agree">
+                                                <i class="am-icon-angle-right"></i>
+                                                <span>审核项目参与者</span>
+                                                <i class="tpl-left-nav-content tpl-badge-primary">
+                                                    5
+                                                </i>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="tpl-left-nav-item">
+                                <a href="javascript:;" class="nav-link tpl-left-nav-link-list">
+                                    <i class="am-icon-wpforms"></i>
+                                    <span>打卡记录</span>
+                                    <i
+                                        class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right tpl-left-nav-more-ico-rotate"></i>
+                                </a>
+                                <ul class="tpl-left-nav-sub-menu" style="display: block;">
+                                    <li>
+                                        <a href="#">
+                                            <i class="am-icon-angle-right"></i>
+                                            <span>自我打卡记录</span>
+                                            <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
+                                        </a>
+
+                                        <a href="#">
+                                            <i class="am-icon-angle-right"></i>
+                                            <span>管理项目打卡记录</span>
+                                        </a>
+                                        <a href="chart.html" class="nav-link tpl-left-nav-link-list">
+                                            <i class="am-icon-bar-chart"></i>
+                                            <span>数据表</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${session.people.plimit} == 2">
+                <div class="tpl-left-nav tpl-left-nav-hover">
+                    <div class="tpl-left-nav-title">
+                        Amaze UI 列表
+                    </div>
+                    <div class="tpl-left-nav-list">
+                        <ul class="tpl-left-nav-menu">
+                            <li class="tpl-left-nav-item">
+                                <a href="/index" class="nav-link active">
+                                    <i class="am-icon-home"></i>
+                                    <span>首页</span>
+                                </a>
+                            </li>
+
+                            <li class="tpl-left-nav-item">
+
+                            </li>
+                            <li class="tpl-left-nav-item">
+                                <a href="javascript:;" class="nav-link tpl-left-nav-link-list">
+                                    <i class="am-icon-table"></i>
+                                    <span>注册申请</span>
+                                    <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
+                                </a>
+                                <ul class="tpl-left-nav-sub-menu">
+                                    <li>
+                                        <a href="/teacher/signschool">
+                                            <i class="am-icon-angle-right"></i>
+                                            <span>创建学校</span>
+                                            <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
+                                        </a>
+
+                                        <a href="/teacher/signlabel">
+                                            <i class="am-icon-angle-right"></i>
+                                            <span>创建实验室</span>
+                                            <i class="tpl-left-nav-content tpl-badge-success">
+                                                18
+                                            </i>
+
+                                            <a href="/teacher/checkProject">
+                                                <i class="am-icon-angle-right"></i>
+                                                <span>审核项目</span>
+                                                <i class="tpl-left-nav-content tpl-badge-primary">
+                                                    5
+                                                </i>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="tpl-left-nav-item">
+                                <a href="javascript:;" class="nav-link tpl-left-nav-link-list">
+                                    <i class="am-icon-wpforms"></i>
+                                    <span>项目打卡</span>
+                                    <i
+                                        class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right tpl-left-nav-more-ico-rotate"></i>
+                                </a>
+                                <ul class="tpl-left-nav-sub-menu" style="display: block;">
+                                    <li>
+                                        <a href="/project/signProject">
+                                            <i class="am-icon-angle-right"></i>
+                                            <span>打卡记录</span>
+                                            <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
+                                        </a>
+
+                                        <a href="chart.html" class="nav-link tpl-left-nav-link-list">
+                                            <i class="am-icon-bar-chart"></i>
+                                            <span>数据表</span>
+                                            <i class="tpl-left-nav-content tpl-badge-danger">
+                                                12
+                                            </i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        <div th:if ="${session.people.plimit} == 2">
-            <div class="tpl-left-nav tpl-left-nav-hover">
-                <div class="tpl-left-nav-title">
-                    Amaze UI 列表
-                </div>
-                <div class="tpl-left-nav-list">
-                    <ul class="tpl-left-nav-menu">
-                        <li class="tpl-left-nav-item">
-                            <a href="/index" class="nav-link active">
-                                <i class="am-icon-home"></i>
-                                <span>首页</span>
-                            </a>
-                        </li>
-    
-                        <li class="tpl-left-nav-item">
-    
-                        </li>
-                        <li class="tpl-left-nav-item">
-                            <a href="javascript:;" class="nav-link tpl-left-nav-link-list">
-                                <i class="am-icon-table"></i>
-                                <span>注册申请</span>
-                                <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
-                            </a>
-                            <ul class="tpl-left-nav-sub-menu">
-                                <li>
-                                    <a href="/teacher/signschool">
-                                        <i class="am-icon-angle-right"></i>
-                                        <span>创建学校</span>
-                                        <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
-                                    </a>
-    
-                                    <a href="/teacher/signlabel">
-                                        <i class="am-icon-angle-right"></i>
-                                        <span>创建实验室</span>
-                                        <i class="tpl-left-nav-content tpl-badge-success">
-                                            18
-                                        </i>
-    
-                                        <a href="/teacher/checkProject">
-                                            <i class="am-icon-angle-right"></i>
-                                            <span>审核项目</span>
-                                            <i class="tpl-left-nav-content tpl-badge-primary">
-                                                5
-                                            </i>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="tpl-left-nav-item">
-                            <a href="javascript:;" class="nav-link tpl-left-nav-link-list">
-                                <i class="am-icon-wpforms"></i>
-                                <span>项目打卡</span>
-                                <i
-                                    class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right tpl-left-nav-more-ico-rotate"></i>
-                            </a>
-                            <ul class="tpl-left-nav-sub-menu" style="display: block;">
-                                <li>
-                                    <a href="/project/signProject">
-                                        <i class="am-icon-angle-right"></i>
-                                        <span>打卡记录</span>
-                                        <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
-                                    </a>
-    
-                                    <a href="chart.html" class="nav-link tpl-left-nav-link-list">
-                                        <i class="am-icon-bar-chart"></i>
-                                        <span>数据表</span>
-                                        <i class="tpl-left-nav-content tpl-badge-danger">
-                                            12
-                                        </i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
 
 
 

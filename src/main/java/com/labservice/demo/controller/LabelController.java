@@ -32,17 +32,8 @@ public class LabelController {
     private LabelServiceImpl labelServiceImpl;
 
     @RequestMapping("/signLabel")
-    public String sign(HttpSession httpSession) {
-        try {
-            People people = (People) httpSession.getAttribute("people");
-
-            if (people == null) {
-                return "redirect:/";
-            }
-        } catch (NullPointerException exception) {
-            return "redirect:/";
-        }
-        return "redirect:/";
+    public String sign() {
+        return "form-label";
     }
 
     @RequestMapping(value = "signLabel.action", method = { RequestMethod.POST, RequestMethod.GET })

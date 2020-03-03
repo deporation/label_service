@@ -1,6 +1,8 @@
 package com.labservice.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,7 +13,11 @@ import com.labservice.demo.service.impl.RecordtimeServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * <p>
@@ -27,40 +33,58 @@ public class RecordtimeController {
 
     @Autowired
     private RecordtimeServiceImpl recordtimeServiceImpl;
-
-    @RequestMapping("/stu_com_pro")
-    public String stu_pro(HttpSession httpSession) {
-        People people = (People) httpSession.getAttribute("people");
+    private boolean sot = false;
+    @RequestMapping("/stuself")
+    @ResponseBody
+    public String self(HttpSession httpSession,Model model){
+        People stu = (People) httpSession.getAttribute("people");
         QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("pid", people.getPid());
+        queryWrapper.eq("pid", stu.getPid());
         List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
-        httpSession.setAttribute("stu_com_pro", recordtimes);
-
-        return "list_stu_pro";
+        model.addAttribute("recordtimes", recordtimes);
+        sot = false;
+        model.addAttribute("mod", sot);
+        return "form-record";
+    }
+    
+    @RequestMapping("/stulea")
+    public String stu_lea(HttpSession httpSession,Model model) {
+        People stu = (People) httpSession.getAttribute("people");
+        QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("sid", stu.getPid());
+        List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
+        model.addAttribute("recordtimes", recordtimes);
+        sot = true;
+        model.addAttribute("mod", sot);
+        return "form-record";
     }
 
-    @RequestMapping("/stu_lea_pro")
-    public String stu_lea(HttpSession httpSession) {
-        try {
-            People people = (People) httpSession.getAttribute("people");
-            QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("sid", people.getPid());
-            List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
-            httpSession.setAttribute("stu_lea_pro", recordtimes);
-        } catch (Exception e) {
-            return "list_stu_pro";
+    @RequestMapping("/tea")
+    public String tea_pro(HttpSession httpSession,Model model) {
+        People tea = (People) httpSession.getAttribute("people");
+        QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("tid", tea.getPid());
+        List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
+        model.addAttribute("recordtimes", recordtimes);
+        sot = true;
+        model.addAttribute("mod", sot);
+        return "form-record";
+    }
+    @RequestMapping(value = "record.action", method = { RequestMethod.POST, RequestMethod.GET })
+    @ResponseBody
+    public String select(@RequestBody Recordtime recordtime,Model model,HttpSession httpSession) {
+        QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
+        List<Recordtime> recordtimes = new ArrayList<>();
+        Map map = model.asMap();
+        sot = (boolean)map.get("mod");
+        if (sot) {
+            queryWrapper.eq("pname", recordtime.getPname()).eq("proname", recordtime.getProname());
+            recordtimes = recordtimeServiceImpl.list(queryWrapper);
+        } else {
+            queryWrapper.eq("proname", recordtime.getProname());
+            recordtimes = recordtimeServiceImpl.list(queryWrapper);
         }
-        return "list_stu_pro";
+        model.addAttribute("recordtimes", recordtimes);
+        return "form-record";
     }
-
-    @RequestMapping("/tea_pro")
-    public String tea_pro(HttpSession httpSession) {
-        People people = (People) httpSession.getAttribute("people");
-        QueryWrapper<Recordtime> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("tid", people.getPid());
-        List<Recordtime> recordtimes = recordtimeServiceImpl.list(queryWrapper);
-        httpSession.setAttribute("tea_pro", recordtimes);
-        return "list_stu_pro";
-    }
-
 }

@@ -29,7 +29,7 @@ public class MyBatisPlusGenerator {
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setUrl(
-                "jdbc:mysql://39.106.95.28:3306/LAB_SERVICE?serverTimezone=UTC&useUnicode=true&useSSL=false&characterEncoding=utf8");
+                "jdbc:mysql://39.106.95.28:3306/LAB_SER?serverTimezone=UTC&useUnicode=true&useSSL=false&characterEncoding=utf8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("chenghan");

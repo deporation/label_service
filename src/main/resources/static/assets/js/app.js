@@ -591,7 +591,7 @@ $("#checkPro_sub").click(function(){
 //学生审核项目
 $("#joinPro_sub").click(function(){
     let $select = [];
-    var $chkBoxes = $('#checklist').find('input:checked');   //找到被选中的checkbox集
+    let $chkBoxes = $('#checklist').find('input:checked');   //找到被选中的checkbox集
     if ($chkBoxes.length == 0) {         //如果不勾选弹出警告框
         alert('请至少选择一个项目');
         return false;
@@ -622,6 +622,25 @@ $("#joinPro_sub").click(function(){
                     n.push(ajaxobj.res-1);
                     alert("已经通过" + n +"个项目，请勿重复审核！");
                 }
+            }
+        }
+    )
+})
+$("#check").click(function(){
+    let formObject = {};
+    let formArray = $("#check_self").serializeArray();
+    $.each(formArray, function (i, item) {
+        formObject[item.name] = item.value;
+    });
+    $.ajax(
+        {
+            url: "/recordtime/record.action",
+            type:"post",
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify(formObject),
+            dataType: "text",
+            success: function (data) {
+
             }
         }
     )
