@@ -29,11 +29,7 @@ public class StudentController {
         return "redirect:/ppl/agree";
     }
     @RequestMapping("/recordself")
-    public String recself(){
-        return "redirect:/recordtime/stuself";
-    }
-    @RequestMapping("/recordlea")
-    public String recteam(){
-        return "redirect:/recordtime/stulea";
+    public String rec(){
+        return "redirect:/recordtime/record";
     }
 }

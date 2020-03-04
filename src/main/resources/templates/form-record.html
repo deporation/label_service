@@ -228,21 +228,16 @@
                             <li class="tpl-left-nav-item">
                                 <a href="javascript:;" class="nav-link tpl-left-nav-link-list">
                                     <i class="am-icon-wpforms"></i>
-                                    <span>打卡记录</span>
+                                    <span>项目打卡</span>
                                     <i
                                         class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right tpl-left-nav-more-ico-rotate"></i>
                                 </a>
                                 <ul class="tpl-left-nav-sub-menu" style="display: block;">
                                     <li>
-                                        <a href="/student/recordself">
+                                        <a href="/recordtime/record.action?proname=&pname=" >
                                             <i class="am-icon-angle-right"></i>
-                                            <span>自我打卡记录</span>
+                                            <span>打卡记录</span>
                                             <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
-                                        </a>
-
-                                        <a href="/student/recordlea">
-                                            <i class="am-icon-angle-right"></i>
-                                            <span>管理项目打卡记录</span>
                                         </a>
                                         <a href="chart.html" class="nav-link tpl-left-nav-link-list">
                                             <i class="am-icon-bar-chart"></i>
@@ -311,7 +306,7 @@
                                 </a>
                                 <ul class="tpl-left-nav-sub-menu" style="display: block;">
                                     <li>
-                                        <a href="/teacher/tea">
+                                        <a href="/recordtime/record.action?proname=&pname=" >
                                             <i class="am-icon-angle-right"></i>
                                             <span>打卡记录</span>
                                             <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
@@ -374,12 +369,9 @@
                             </div>
                         </div>
                         <form>
-                            <div class="am-u-sm-12 am-u-md-3" th:attr="data-mod=${session.mod}" id="mod" >
+                            <div class="am-u-sm-12 am-u-md-3">
 
-                                <div class="am-form-group" th:if = "${session.mod} == 0" >
-                                    <input type="text" class="am-form-field" id="proname" placeholder="项目名字">
-                                </div>
-                                <div class="am-form-group" th:if = "${session.mod} == 1">
+                                <div class="am-form-group">
                                     <input type="text" class="am-form-field" id="proname" placeholder="项目名字">
                                     <input type="text" class="am-form-field" id="pname" placeholder="参与人姓名">
                                 </div>
@@ -405,13 +397,13 @@
                                                     id="all"></th>
                                             
                                             <th class="table-author am-hide-sm-only" id="sid">成员</th>
-                                            <th class="table-title" id="proname">项目名称</th>
+                                            <th class="table-title">项目名称</th>
                                             <th class="table-date am-hide-sm-only" id="date">打卡时间</th>
                                             <!--<th class="table-set">操作</th>-->
                                         </tr>
                                     </thead>
                                     <tbody id="checklist">
-                                        <tr th:each="recordtime: ${session.recordtimes}">
+                                        <tr th:each="recordtime: ${recordtimes}">
                                             <td><input type="checkbox" class="tpl-table-fz-check"
                                                     ></td>
                                             <td th:text="${recordtime.pname}"><a href="#"></a>

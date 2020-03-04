@@ -626,25 +626,36 @@ $("#joinPro_sub").click(function(){
         }
     )
 })
+function encodeSearchParams(obj) {
+    const params = []
+  
+    Object.keys(obj).forEach((key) => {
+      let value = obj[key]
+      // 如果值为undefined我们将其置空
+      if (typeof value === 'undefined') {
+        value = ''
+      }
+      params.push([key, encodeURIComponent(value)].join('='))
+    })
+  
+    return params.join('&')
+}
 $("#check_self").click(function(){
-    let projectMap = new Map();
-    projectMap.set("pname",$('#pname').val());
-    projectMap.set("proname",$('#proname').val());
-    projectMap.set("mod",$('#proname').data("mod"));
-    let obj= Object.create(null);
-    for (let[k,v] of projectMap) {
-        obj[k] = v;
+
+    const obj = {
+        proname:$("#proname").val(),
+        pname:$("#pname").val()
     }
-    console.log(projectMap);
+    console.log(encodeSearchParams(obj));
+    const finalUrl = "/recordtime/record.action?" + encodeSearchParams(obj)
     $.ajax(
         {
-            url: "/recordtime/record.action",
+            url: finalUrl,
             type:"post",
             contentType: "application/json;charset=UTF-8",
-            data: JSON.stringify(obj),
             dataType: "text",
             success: function (data) {
-                window.location.reload();
+                window.location.href = finalUrl;
             }
         }
     )
