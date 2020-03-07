@@ -96,7 +96,7 @@ public class ProjectController {
             }
             QueryWrapper<People> queryWrapper2 = new QueryWrapper<>();
             queryWrapper2.eq("num", project.get("teanum")).eq("scid", student.getScid());
-            People teacher = (People) peopleServiceImpl.getObj(queryWrapper2);
+            People teacher = (People) peopleServiceImpl.getOne(queryWrapper2);
             int lid = Integer.parseInt(project.get("label"));
             Project signProject = Project.builder().pnum(project.get("pnum")).proname(project.get("pname"))
                     .sid(student.getPid()).tid(teacher.getPid()).lid(lid).status(false).build();

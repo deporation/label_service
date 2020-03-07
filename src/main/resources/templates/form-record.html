@@ -234,7 +234,7 @@
                                 </a>
                                 <ul class="tpl-left-nav-sub-menu" style="display: block;">
                                     <li>
-                                        <a href="/recordtime/record.action?proname=&pname=" >
+                                        <a href="/select">
                                             <i class="am-icon-angle-right"></i>
                                             <span>打卡记录</span>
                                             <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
@@ -306,7 +306,7 @@
                                 </a>
                                 <ul class="tpl-left-nav-sub-menu" style="display: block;">
                                     <li>
-                                        <a href="/recordtime/record.action?proname=&pname=" >
+                                        <a href="/select">
                                             <i class="am-icon-angle-right"></i>
                                             <span>打卡记录</span>
                                             <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
@@ -364,7 +364,7 @@
                                     <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-save"></span> 保存</button>-->
                                     <button type="button" class="am-btn am-btn-default am-btn-warning"
                                         id="joinPro_sub"><span class="am-icon-archive"></span> 导出文件</button>
-                                        
+
                                 </div>
                             </div>
                         </div>
@@ -395,7 +395,7 @@
                                         <tr>
                                             <th class="table-check"><input type="checkbox" class="tpl-table-fz-check"
                                                     id="all"></th>
-                                            
+
                                             <th class="table-author am-hide-sm-only" id="sid">成员</th>
                                             <th class="table-title">项目名称</th>
                                             <th class="table-date am-hide-sm-only" id="date">打卡时间</th>
@@ -403,9 +403,8 @@
                                         </tr>
                                     </thead>
                                     <tbody id="checklist">
-                                        <tr th:each="recordtime: ${recordtimes}">
-                                            <td><input type="checkbox" class="tpl-table-fz-check"
-                                                    ></td>
+                                        <tr th:each="recordtime: ${recordtimes.list}">
+                                            <td><input type="checkbox" class="tpl-table-fz-check"></td>
                                             <td th:text="${recordtime.pname}"><a href="#"></a>
                                             </td>
                                             <td th:text="${recordtime.proname}"></td>
@@ -428,14 +427,34 @@
                                 <div class="am-cf">
 
                                     <div class="am-fr">
-                                        <ul class="am-pagination tpl-pagination">
-                                            <li class="am-disabled"><a href="#"></a></li>
-                                            <li class="am-active"><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">5</a></li>
-                                            <li><a href="#">»</a></li>
+                                        <ul class="am-pagination tpl-pagination" >
+                                            <li>
+                                                <a th:if="${not isFirstPage}" th:href="@{${'/recordtime/record.action'}(pageNum=${pageNum-1})}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                                <a th:if="${isFirstPage}" href="javascript:void(0);" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                    
+                                            <li th:each="pageNo : ${#numbers.sequence(1, totalPages)}">
+                                                <a th:if="${pageNum eq pageNo}" href="javascript:void(0);">
+                                                    <span th:text="${pageNo}"></span>
+                                                </a>
+                                    
+                                                <a th:if="${not (pageNum eq pageNo)}" th:href="@{${'allUsers'}(pageNum=${pageNo})}">
+                                                    <span th:text="${pageNo}"></span>
+                                                </a>
+                                            </li>
+                                    
+                                            <li>
+                                                <a th:if="${not isLastPage}" th:href="@{${'/recordtime/record.action'}(pageNum=${pageNum+1},proname=${'#proname'}.val(),pname = $('#pname').val())}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                                <a th:if="${isLastPage}" href="javascript:void(0);" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

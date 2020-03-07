@@ -5,12 +5,15 @@ import com.alibaba.druid.support.http.ResourceServlet;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.github.pagehelper.PageHelper;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -73,4 +76,19 @@ public class MyBatisPlusConfig {
         return new PaginationInterceptor();
     }
 
+    /**
+     * 配置mybatis的分页插件pageHelper
+     * @return
+     */
+    @Bean
+    public PageHelper pageHelper() {
+        PageHelper pageHelper = new PageHelper();
+        Properties properties = new Properties();
+        properties.setProperty("offsetAsPageNum", "true");
+        properties.setProperty("rowBoundsWithCount", "true");
+        properties.setProperty("reasonable", "true");
+        properties.setProperty("dialect", "mysql");
+        pageHelper.setProperties(properties);
+        return pageHelper;
+    }
 }

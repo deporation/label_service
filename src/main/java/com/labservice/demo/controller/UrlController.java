@@ -22,7 +22,11 @@ public class UrlController {
     }
 
     @RequestMapping(value = "index")
-    public String index(HttpSession session) {
+    public String index() {
         return "index";
+    }
+    @RequestMapping("select")
+    private String name() {
+        return "redirect:/recordtime/record.action?proname=&pname=&pagenum=1";
     }
 }
