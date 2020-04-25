@@ -42,12 +42,9 @@ public class LabelController {
         Map<String, String> map = new HashMap<String, String>();
         boolean res = false;
         try {
-            People people = (People) httpSession.getAttribute("people");
-            QueryWrapper<Label> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("lname", label.getLname()).eq("scid", people.getScid());
-
-            if (labelServiceImpl.getOne(queryWrapper) == null) {
-                label = label.setScid(people.getScid());
+            if (labelServiceImpl.getOne(new QueryWrapper<Label>().eq("lname", label.getLname()).eq("scid",
+                    ((People) httpSession.getAttribute("people")).getScid())) == null) {
+                label = label.setScid(((People) httpSession.getAttribute("people")).getScid());
                 res = labelServiceImpl.save(label);
             }
         } catch (Exception e) {

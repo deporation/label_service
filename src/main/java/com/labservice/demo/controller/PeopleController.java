@@ -32,8 +32,6 @@ public class PeopleController {
 
     @Autowired
     private PeopleServiceImpl peopleServiceImpl;
-    @Autowired
-    private PeopleMapper peoplemapper;
 
     @RequestMapping("/login")
     public String Login() {
@@ -43,13 +41,10 @@ public class PeopleController {
     @RequestMapping(value = "/login.action", method = { RequestMethod.POST, RequestMethod.GET })
     @ResponseBody
     public Map<String, String> selectTest(@RequestBody People people, HttpSession session) {
-        System.out.println(people.toString());
-        QueryWrapper<People> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("account", people.getAccount());
         Map<String, String> map = new HashMap<String, String>();
         boolean res = false;
         try {
-            People peo = peoplemapper.selectOne(queryWrapper);
+            People peo = peopleServiceImpl.getOne(new QueryWrapper<People>().eq("account", people.getAccount()));
             if (people.getPasswd().equals(peo.getPasswd())) {
                 res = true;
                 System.out.println(peo);
@@ -76,14 +71,11 @@ public class PeopleController {
 
     @RequestMapping(value = "signin.action", method = { RequestMethod.POST, RequestMethod.GET })
     @ResponseBody
-    public Map<String, String> dosignin(@RequestBody People people, HttpSession httpSession,
-            HttpServletResponse response) {
-        QueryWrapper<People> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("account", people.getAccount());
+    public Map<String, String> dosignin(@RequestBody People people, HttpSession httpSession) {
         Map<String, String> map = new HashMap<String, String>();
         boolean res = false;
         try {
-            People people2 = peoplemapper.selectOne(queryWrapper);
+            People people2 = peopleServiceImpl.getOne(new QueryWrapper<People>().eq("account", people.getAccount()));
             if (people2 == null) {
                 people.setPlimit(1);
                 res = peopleServiceImpl.save(people);

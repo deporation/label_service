@@ -47,11 +47,8 @@ public class ProjectinfoController {
 
     @RequestMapping(value = "checkProject")
     public String Check(Model model, HttpSession httpSession) {
-        People teacher = (People) httpSession.getAttribute("people");
-        if (teacher.getPlimit() == 2) {
-            QueryWrapper<Projectinfo> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("tid", teacher.getPid()).eq("status", false);
-            List<Projectinfo> projectinfos = projectinfoServiceImpl.list(queryWrapper);
+        if (((People) httpSession.getAttribute("people")).getPlimit() == 2) {
+            List<Projectinfo> projectinfos = projectinfoServiceImpl.list(new QueryWrapper<Projectinfo>().eq("tid", ((People) httpSession.getAttribute("people")).getPid()).eq("status", false));
             model.addAttribute("projectinfos", projectinfos);
             System.out.println(projectinfos);
         }

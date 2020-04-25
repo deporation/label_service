@@ -52,14 +52,12 @@ public class PplController {
     private PplinfoServiceImpl pplinfoServiceImpl;
 
     @RequestMapping("/signPpl")
-    public String sign(HttpSession httpSession,Model model) {
+    public String sign(HttpSession httpSession, Model model) {
         People stu = (People) httpSession.getAttribute("people");
         if (stu.getPlimit() != 2) {
-            QueryWrapper<Projectinfo> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("scid", stu.getScid()).eq("status", true).ne("num",stu.getNum());
-            List<Projectinfo> projectinfos = projectinfoServiceImpl.list(queryWrapper);
+            List<Projectinfo> projectinfos = projectinfoServiceImpl.list(new QueryWrapper<Projectinfo>()
+                    .eq("scid", stu.getScid()).eq("status", true).ne("num", stu.getNum()));
             model.addAttribute("projectinfos", projectinfos);
-            System.out.println(projectinfos);
         }
         return "form-join";
     }
@@ -68,7 +66,7 @@ public class PplController {
     @ResponseBody
     public Map<String, Object> sign(@RequestBody List<String> pnumList, HttpSession session) {
         List<Integer> nums = new ArrayList<>();
-        Map<String,Object> n = new HashMap<>();
+        Map<String, Object> n = new HashMap<>();
         People people = (People) session.getAttribute("people");
         boolean res = false;
         Map<String, Object> map = new HashMap<>();
@@ -76,28 +74,30 @@ public class PplController {
         queryWrapper.in("pnum", pnumList);
         List<Project> projects = projectServiceImpl.list(queryWrapper);
         List<Ppl> ppls = new ArrayList<>();
-        UpdateWrapper<Ppl>updateWrapper = new UpdateWrapper<>();
+        UpdateWrapper<Ppl> updateWrapper = new UpdateWrapper<>();
         for (int index = 0; index < projects.size(); index++) {
             Ppl ppl = Ppl.builder().lid(projects.get(index).getLid()).pid(people.getPid())
                     .pnum(projects.get(index).getPnum()).stat(false).build();
-            updateWrapper.eq("pnum",projects.get(index).getPnum()).eq("pid", people.getPid()).eq("lid", projects.get(index).getLid());
-            if (pplServiceImpl.update(ppl, updateWrapper)){
-                nums.add(index+2);
-            }else
+            updateWrapper.eq("pnum", projects.get(index).getPnum()).eq("pid", people.getPid()).eq("lid",
+                    projects.get(index).getLid());
+            if (pplServiceImpl.update(ppl, updateWrapper)) {
+                nums.add(index + 2);
+            } else
                 ppls.add(ppl);
         }
         System.out.println(nums.isEmpty());
         res = pplServiceImpl.saveBatch(ppls);
-        if(nums.isEmpty()){
+        if (nums.isEmpty()) {
             map.put("res", res);
-        }else{
-            n.put("res",nums);
+        } else {
+            n.put("res", nums);
             return n;
         }
         return map;
     }
+
     @RequestMapping("/agree")
-    public String agree(HttpSession session,Model model){
+    public String agree(HttpSession session, Model model) {
         People stu = (People) session.getAttribute("people");
         QueryWrapper<Project> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("sid", stu.getPid());
@@ -107,20 +107,18 @@ public class PplController {
             pnums.add(project.getPnum());
         }
         QueryWrapper<Pplinfo> queryWrapper2 = new QueryWrapper<>();
-        queryWrapper2.in("pnum", pnums).ne("pname",stu.getPname()).eq("stat",false);
+        queryWrapper2.in("pnum", pnums).ne("pname", stu.getPname()).eq("stat", false);
         List<Pplinfo> pplinfos = pplinfoServiceImpl.list(queryWrapper2);
         model.addAttribute("pplinfos", pplinfos);
         return "form-join";
     }
+
     @RequestMapping(value = "agreePpl.action", method = { RequestMethod.POST, RequestMethod.GET })
     @ResponseBody
-    public Map<String, String> agree(@RequestBody List<Integer> pplids, HttpSession session){
+    public Map<String, String> agree(@RequestBody List<Integer> pplids, HttpSession session) {
         boolean res = false;
         Map<String, String> map = new HashMap<>();
-        UpdateWrapper<Ppl> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.in("pplid",pplids);
-        Ppl ppl = Ppl.builder().stat(true).build();
-        res = pplServiceImpl.update(ppl, updateWrapper);
+        res = pplServiceImpl.update(Ppl.builder().stat(true).build(), new UpdateWrapper<Ppl>().in("pplid", pplids));
         map.put("res", res == true ? "1" : "0");
         return map;
     }
